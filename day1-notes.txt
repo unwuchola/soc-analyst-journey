@@ -1,0 +1,59 @@
+    
+COLLECTING THE EVIDENCE
+Event ID: 4624
+Logon Type: 5
+Account Name under "New Logon": System
+Account Domain: NT AUTHORITY
+Process Name: C:\windows\system32\service.exe
+Source Network Address: Nill
+
+
+THINK LIKE AN ANALYST
+What happened?
+A successful logon session was created on the computer. Specifically, the Windows operating system, It was not a human logging in.
+
+Which account was involved?
+The SYSTEM account. The domain is NT AUTHORITY.
+
+What process was involved?
+The process C:\Windows\System32\services.exe. This is the legitimate Windows Service Control Manager, which is responsible for starting and managing background services
+
+Was a source network address recorded?
+No. In the "Network Information" section, the Source Network Address is listed as a dash (-).
+
+Does this event prove that a person physically logged into the laptop?
+No. This event does not prove a person logged in. The logon type is 5 (Service), which means a background service started, not a human. A human logging in physically would typically generate a Logon Type 2 (Interactive)
+
+
+What evidence supports your answer?
+The evidence is found in the Event ID details:
+Event ID 4624 shows a successful logon occurred.
+Logon Type 5 shows it was a Service logon, not a human.
+Account Name: SYSTEM shows the operating system initiated it, not a user.
+Process Name: services.exe confirms it was the Windows.
+Source Network Address: None confirms it was a local event, not a remote connection.
+
+What can you NOT determine from this event?
+You cannot determine which specific service started. While services.exe initiated the session, You also cannot determine why the service started (e.g., a scheduled task, a system reboot, or a manual trigger). It only proves that a service logon session was created.
+
+OBSERVED
+Event ID: 4624
+Result: Successful Logon (Audit Success)
+Date and Time: 9/29/2026 10:18:36 PM
+Logon Type: 5 (Service)
+Account Name: SYSTEM
+Account Domain: NT AUTHORITY
+Process Name: C:\Windows\System32\services.exe
+Source Network Address: None
+
+What I think it means
+This event represents a routine Windows operating system activity, not a human login. 
+The operating system's Service Control Manager (services.exe) started a background service. Because it is a system service, it used the built-in SYSTEM account (NT AUTHORITY) to create a secure session. 
+Since the Source Network Address is empty, this activity originated locally on the computer and was not triggered by a remote connection.
+What I cannot determine from this event
+1. Which specific background service started
+2. The exact reason the service started (e.g., system reboot, scheduled task, or manual trigger).
+3. Whether any activity occurred after the service started 
+
+WHAT I LEARNED
+I learned that Event ID 4624 does not automatically mean a human logged in. It simply means a logon session was created. To understand the full story, an analyst must look at the Logon Type. I also learned the importance of separating raw observations from interpretations to avoid jumping to false conclusions. Finally, I learned that one single event rarely tells the whole story; context from other logs is always needed.
